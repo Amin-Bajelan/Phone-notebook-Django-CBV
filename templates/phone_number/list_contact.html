@@ -8,34 +8,45 @@
 
 <form method="post" action="{% url 'logout' %}">
     {% csrf_token %}
-    <button value="submit">Logout</button>
+    <button type="submit">Logout</button>
 </form>
-{#<form method="post" action="{% url '' %}">#}
-{#    {% csrf_token %}#}
-{#    <button value="submit">Profile</button>#}
-{#</form>#}
+
+<form method="post" action="{% url 'profile' %}">
+    {% csrf_token %}
+    <button type="submit">Profile</button>
+</form>
+
 <form method="post" action="{% url 'add-contact' %}">
     {% csrf_token %}
-    <button value="submit">Add contact</button>
+    <button type="submit">Add contact</button>
 </form>
 <hr>
 
     {% if contacts %}
     {% for i in contacts %}
+        {% if i.contact_image %}
+            <img height="200px" src="{{ i.contact_image.url }}" alt="">
+        {% endif %}
         <h3>{{ i.name_contact }}</h3>
         <h3>{{ i.phone_number }}</h3>
 
     <form method="post" action="{% url 'detail-contact' i.id %}">
         {% csrf_token %}
-        <button value="submit">Detail</button>
+        <button type="submit">Detail</button>
     </form>
+    <form method="post" action="{% url 'delete-contact' i.id %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+        <hr>
     {% endfor %}
     {% else %}
     <h3>there is no contact</h3>
+
     {% endif %}
 
 
-<hr>
+
         <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
