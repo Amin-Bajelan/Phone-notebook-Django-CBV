@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+
+    <h2>Welcome, this website is designed to register your phone contacts. If you do not have an account, please register.</h2>
+    <br>
+    <form method="post" action="{% url "login" %}">
+        {% csrf_token %}
+        <button value="submit">Login</button>
+    </form>
+    <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <button value="submit">Signup</button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+Django==5.2.3
+#import image to databse
+Pillow
+
+#craete random user and
+Faker
