@@ -1,69 +1,85 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>List Contact</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
 
-<form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-</form>
+<div class="top-bar">
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn logout">Logout</button>
+    </form>
 
-<form method="post" action="{% url 'profile' %}">
-    {% csrf_token %}
-    <button type="submit">Profile</button>
-</form>
+    <form method="post" action="{% url 'update-profile' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn profile">Edit Profile</button>
+    </form>
 
-<form method="post" action="{% url 'add-contact' %}">
-    {% csrf_token %}
-    <button type="submit">Add contact</button>
-</form>
+    <a href="{% url 'show-profile' %}">
+        <button type="button" class="btn profile">Profile</button>
+    </a>
+
+    <form method="post" action="{% url 'add-contact' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn add">Add contact</button>
+    </form>
+</div>
+
 <hr>
 
+<div class="contact-list">
     {% if contacts %}
-    {% for i in contacts %}
-        {% if i.contact_image %}
-            <img height="200px" src="{{ i.contact_image.url }}" alt="">
-        {% endif %}
-        <h3>{{ i.name_contact }}</h3>
-        <h3>{{ i.phone_number }}</h3>
-
-    <form method="post" action="{% url 'detail-contact' i.id %}">
-        {% csrf_token %}
-        <button type="submit">Detail</button>
-    </form>
-    <form method="post" action="{% url 'delete-contact' i.id %}">
-        {% csrf_token %}
-        <button type="submit">Delete</button>
-    </form>
-        <hr>
-    {% endfor %}
+        {% for i in contacts %}
+        <div class="contact-card">
+            {% if i.contact_image %}
+                <img src="{{ i.contact_image.url }}" alt="Contact Image">
+            {% else %}
+                <img src="{% static 'images/images.jpg' %}" alt="Default">
+            {% endif %}
+            <div class="contact-info">
+                <h3>{{ i.name_contact }}</h3>
+                <p>{{ i.phone_number }}</p>
+                <div class="actions">
+                    <a href="{% url 'detail-contact' i.id %}">
+                        <button type="button" class="btn detail">Detail</button>
+                    </a>
+                    <a href="{% url 'update-contact' i.id %}">
+                        <button type="button" class="btn detail">Update</button>
+                    </a>
+                    <form method="post" action="{% url 'delete-contact' i.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn delete">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     {% else %}
-    <h3>there is no contact</h3>
-
+        <h3 class="no-contact">There is no contact...</h3>
     {% endif %}
+</div>
 
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">prev</a>
+        {% endif %}
 
-
-        <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
-
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
+        <span class="current">
+            page {{ page_obj.number }} as {{ page_obj.paginator.num_pages }}
         </span>
-    </div>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 
 </body>
 </html>

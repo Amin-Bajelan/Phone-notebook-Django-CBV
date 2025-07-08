@@ -1,16 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Profile Detail</title>
+    <link rel="stylesheet" href="{% static 'style_profile.css' %}">
 </head>
 <body>
 
-    {% for i in profile %}
-        {{ i.username }}
-        <h3>{{ i.first_name }} {{ i.last_name }}</h3>
-    {% endfor %}
 
+<a href="{% url 'list-contact' %}" class="back-button">Back</a>
+
+<div class="profile-container">
+    {% if profile.image %}
+        <img src="{{ profile.image.url }}" alt="Profile Image">
+    {% else %}
+        <img src="{% static 'images/images.jpg' %}" alt="Default Profile">
+    {% endif %}
+
+    <h3>{{ profile.first_name }} {{ profile.last_name }}</h3>
+    <h4>Created at: {{ profile.created_date }}</h4>
+</div>
 
 </body>
 </html>

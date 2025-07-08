@@ -1,0 +1,85 @@
+/* Back button styling */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: #3897f0;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px solid #3897f0;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.back-button:hover {
+    background-color: #3897f0;
+    color: white;
+}
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fafafa;
+    color: #262626;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+}
+
+/* Profile container */
+.profile-container {
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    padding: 30px 40px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Profile image */
+.profile-container img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #dbdbdb;
+    margin-bottom: 20px;
+}
+
+/* Name styling */
+.profile-container h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #262626;
+}
+
+/* Created date styling */
+.profile-container h4 {
+    font-size: 14px;
+    font-weight: 400;
+    color: #8e8e8e;
+}
+
+/* Responsive tweak (optional) */
+@media (max-width: 400px) {
+    .profile-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .profile-container img {
+        width: 120px;
+        height: 120px;
+    }
+}

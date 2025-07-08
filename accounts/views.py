@@ -9,4 +9,4 @@ from .forms import CreateUserForm
 class SignUpView(CreateView):
     form_class = CreateUserForm
     template_name = "registration/signup.html"
-    success_url = "/phone_number/list-contact/"
+    success_url = "/accounts/login/"

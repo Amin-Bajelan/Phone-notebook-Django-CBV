@@ -4,6 +4,7 @@ from django.views.generic import (ListView, DetailView, CreateView,
 from django.contrib.auth.mixins import LoginRequiredMixin
 from phone_number.models import Contact
 from accounts.models import Profile
+from django.utils import timezone
 
 
 # Create your views here.
@@ -31,9 +32,6 @@ class ContactDetail(DetailView):
     context_object_name = 'contact'
     template_name = 'phone_number/detail_contact.html'
 
-    def get_context_data(self, **kwargs):
-        Contact.objects.get(id=self.kwargs['pk'])
-
 
 class CreateContact(CreateView):
     """
@@ -50,7 +48,7 @@ class CreateContact(CreateView):
         return redirect('/phone_number/list-contact/')
 
 
-class ShowProfile(TemplateView):
+class ShowProfile(LoginRequiredMixin, DetailView):
     """
     show profile on login account
     """
@@ -63,11 +61,37 @@ class ShowProfile(TemplateView):
 
 
 class DeleteContact(DeleteView):
+    """
+    delete contact on login account
+    """
     model = Contact
     template_name = "phone_number/delete_contact.html"
     success_url = '/phone_number/list-contact/'
 
 
-class DetailContact(DetailView):
+class UpdateContact(UpdateView):
+    """
+    update contact on login account
+    """
     model = Contact
-    template_name = 'phone_number/detail_contact.html'
+    fields = ['contact_image', 'name_contact', 'phone_number', 'email']
+    template_name = 'phone_number/update_contact.html'
+    context_object_name = 'contact'
+    success_url = '/phone_number/list-contact/'
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        form.instance.is_updated = True
+        form.instance.updated_at = timezone.now()
+        return super().form_valid(form)
+
+
+class UpdateProfile(UpdateView):
+    """
+    update profile on login account
+    """
+    model = Profile
+    fields = ['username', 'first_name', 'last_name', 'image']
+    success_url = '/phone_number/list-contact/'
+    def get_queryset(self):
+        return Profile.objects.get(username=self.request.user)
