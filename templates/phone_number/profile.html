@@ -20,6 +20,12 @@
 
     <h3>{{ profile.first_name }} {{ profile.last_name }}</h3>
     <h4>Created at: {{ profile.created_date }}</h4>
+    <hr>
+    {% if profile.description %}
+    <h4>{{ profile.description }}</h4>
+    {% else %}
+    <h4>you dont have bio</h4>
+    {% endif %}
 </div>
 
 </body>

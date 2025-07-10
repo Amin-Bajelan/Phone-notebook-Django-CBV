@@ -14,6 +14,11 @@
         <button type="submit" class="btn logout">Logout</button>
     </form>
 
+    <form method="post" action="{% url 'change_password' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn profile">Change Password</button>
+    </form>
+
     <form method="post" action="{% url 'update-profile' %}">
         {% csrf_token %}
         <button type="submit" class="btn profile">Edit Profile</button>

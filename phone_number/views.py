@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views.generic import (ListView, DetailView, CreateView,
-                                  UpdateView, DeleteView, TemplateView)
+                                  UpdateView, DeleteView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from phone_number.models import Contact
 from accounts.models import Profile
@@ -10,7 +10,7 @@ from django.utils import timezone
 # Create your views here.
 
 
-class ListContact(ListView):
+class ListContact(ListView,LoginRequiredMixin):
     """
     show list of all  contacts on login account
     """
@@ -24,7 +24,7 @@ class ListContact(ListView):
         return Contact.objects.filter(owner=self.request.user)
 
 
-class ContactDetail(DetailView):
+class ContactDetail(DetailView,LoginRequiredMixin):
     """
     show details of contact on login account
     """
@@ -33,7 +33,7 @@ class ContactDetail(DetailView):
     template_name = 'phone_number/detail_contact.html'
 
 
-class CreateContact(CreateView):
+class CreateContact(CreateView,LoginRequiredMixin):
     """
     add new contact on login account
     """
@@ -48,7 +48,7 @@ class CreateContact(CreateView):
         return redirect('/phone_number/list-contact/')
 
 
-class ShowProfile(LoginRequiredMixin, DetailView):
+class ShowProfile(DetailView,LoginRequiredMixin):
     """
     show profile on login account
     """
@@ -60,7 +60,7 @@ class ShowProfile(LoginRequiredMixin, DetailView):
         return Profile.objects.get(username=self.request.user)
 
 
-class DeleteContact(DeleteView):
+class DeleteContact(DeleteView,LoginRequiredMixin):
     """
     delete contact on login account
     """
@@ -69,7 +69,7 @@ class DeleteContact(DeleteView):
     success_url = '/phone_number/list-contact/'
 
 
-class UpdateContact(UpdateView):
+class UpdateContact(UpdateView,LoginRequiredMixin):
     """
     update contact on login account
     """
@@ -86,12 +86,18 @@ class UpdateContact(UpdateView):
         return super().form_valid(form)
 
 
-class UpdateProfile(UpdateView):
+class UpdateProfile(UpdateView,LoginRequiredMixin):
     """
-    update profile on login account
+    edit profile on login account
     """
     model = Profile
-    fields = ['username', 'first_name', 'last_name', 'image']
+    fields = ['image', 'first_name', 'last_name', 'description']
     success_url = '/phone_number/list-contact/'
-    def get_queryset(self):
+    template_name = 'accounts/profile_form.html'
+
+    def get_object(self):
         return Profile.objects.get(username=self.request.user)
+
+    def form_valid(self, form):
+        form.instance.username = self.request.user
+        return super().form_valid(form)

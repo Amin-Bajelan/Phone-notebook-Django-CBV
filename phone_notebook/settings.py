@@ -129,3 +129,5 @@ LOGOUT_REDIRECT_URL = '/'
 #setup path for store photo
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
