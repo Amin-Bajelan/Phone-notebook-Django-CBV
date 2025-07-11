@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 
@@ -10,5 +10,6 @@ urlpatterns = [
     path('delete_contact/<int:pk>',views.DeleteContact.as_view(),name='delete-contact'),
     path("update_contact/<int:pk>",views.UpdateContact.as_view(),name='update-contact'),
     path("update_profile/",views.UpdateProfile.as_view(),name='update-profile'),
-
+    # setup urls for api url
+    path('api/v1/',include('phone_number.api.v1.urls')),
 ]

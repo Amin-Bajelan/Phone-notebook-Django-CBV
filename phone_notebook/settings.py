@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'accounts',
     'phone_number',
+    'rest_framework',
+    'django_filters',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -130,4 +133,12 @@ LOGOUT_REDIRECT_URL = '/'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
+#setup filter ability and authentication
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ]
+}
