@@ -10,7 +10,7 @@
 
   <h2>🚀 Setup Instructions</h2>
   <ol>
-    <li>Clone repo: <code>git clone https://github.com/your-username/contacts-app.git</code></li>
+    <li>Clone repo: <code>git clone https://github.com/Amin-Bajelan/Phone-notebook-Django-CBV</code></li>
     <li>Install dependencies: <code>pip install -r requirements.txt</code></li>
     <li>Run migrations: <code>python manage.py migrate</code></li>
     <li>Start server: <code>python manage.py runserver</code></li>
